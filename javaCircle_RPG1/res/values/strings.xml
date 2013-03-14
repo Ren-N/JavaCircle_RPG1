@@ -4,5 +4,7 @@
     <string name="app_name">javaCircle_RPG1</string>
     <string name="action_settings">Settings</string>
     <string name="hello_world">Hello world!</string>
+    <string name="button1">たたかう</string>
+    <string name="button2">にげる</string>
 
 </resources>
