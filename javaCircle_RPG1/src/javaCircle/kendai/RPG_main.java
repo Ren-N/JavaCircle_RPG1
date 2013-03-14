@@ -32,6 +32,7 @@ public class RPG_main extends Activity {
 		text = (TextView)findViewById(R.id.textView1);
 		text.setBackgroundColor(Color.BLACK);
 		text.setTextColor(Color.WHITE);
+		text.setTextSize(20.0f);
 		/*他のクラスでtextViewUIを扱うのでHandlerを使って橋渡し*/
 		Handler mHandler =  new Handler(){
             //メッセージ受信
