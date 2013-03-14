@@ -32,6 +32,7 @@ public class Battle_MainPanel extends SurfaceView implements Callback,Runnable{
 	private TextView textview;
 	private Handler mHandler;
 	private Point point;
+	private int dispHeight,dispWidth;
 	
 	//【コンストラクタ】=================================================================================================
 	public Battle_MainPanel(Context context,SurfaceView sv,TextView textview,Handler a,Point point) {
@@ -40,6 +41,8 @@ public class Battle_MainPanel extends SurfaceView implements Callback,Runnable{
 		this.textview = textview;
 		this.mHandler = a;
 		this.point = point;
+		this.dispHeight = point.y;
+		this.dispWidth = point.x;
 		/*xmlで生成したBattle_MainPanel(SurfaceView)のholderを得て,callbackにこのクラスに追加。
 		 * そうすると生成時にsurfaceCreatedが実行される。*/
 		holder = sv.getHolder();
@@ -80,6 +83,61 @@ public class Battle_MainPanel extends SurfaceView implements Callback,Runnable{
 		
 		String text = attacker.getName() + "は" +target.getName() + "を攻撃。";
 		this.setText(text);
+		
+		//敵モンスターの点滅(今回はnum2=1のとき。これもifで場合わけ。今回は割愛。)
+		for(int i=0;i<2;i++){
+			Canvas canvas = holder.lockCanvas();
+			this.setStage(canvas);
+			if(player.getMonster(1)!=null){
+    		player.getMonster(1).draw(canvas, 0, 4*dispHeight/5);
+			}
+			if(player.getMonster(2)!=null){
+				player.getMonster(2).draw(canvas, 1*dispWidth/3, 4*dispHeight/5);
+			}
+	    	if(player.getMonster(3)!=null){
+	    		player.getMonster(3).draw(canvas, 2*dispWidth/3, 4*dispHeight/5);
+	    	}
+	    	/*if(enemy.getMonster(2)!=null){
+	    		enemy.getMonster(2).draw(canvas, 2*dispWidth/7, 2*dispHeight/5);
+	    	}
+	    	if(enemy.getMonster(3)!=null){
+	    		enemy.getMonster(3).draw(canvas, 1*dispWidth/7, 2*dispHeight/5);
+	    	}*/
+	    	holder.unlockCanvasAndPost(canvas);
+	    	try{
+				Thread.sleep(20);
+			} catch(InterruptedException e){
+				e.printStackTrace();
+			}
+	    	canvas = holder.lockCanvas();
+			this.setStage(canvas);
+	    	if(player.getMonster(1)!=null){
+	    		player.getMonster(1).draw(canvas, 0, 4*dispHeight/5);
+	    	}
+	    	if(player.getMonster(2)!=null){
+	    		player.getMonster(2).draw(canvas, 1*dispWidth/3, 4*dispHeight/5);
+	    	}
+	    	if(player.getMonster(3)!=null){
+	    		player.getMonster(3).draw(canvas, 2*dispWidth/3, 4*dispHeight/5);
+	    	}
+	    	if(enemy.getMonster(1)!=null){
+	    		enemy.getMonster(1).draw(canvas, 2*dispWidth/7, 2*dispHeight/5);
+	    	}
+	    	if(enemy.getMonster(2)!=null){
+	    		enemy.getMonster(2).draw(canvas, 2*dispWidth/7, 2*dispHeight/5);
+	    	}
+	    	if(enemy.getMonster(3)!=null){
+	    		enemy.getMonster(3).draw(canvas, 1*dispWidth/7, 2*dispHeight/5);
+	    	}
+	    	holder.unlockCanvasAndPost(canvas);
+	    	try{
+				Thread.sleep(20);
+			} catch(InterruptedException e){
+				e.printStackTrace();
+			}
+
+		}
+		
 	}
 	
 	//逃げる!!-----------------------------------------------------------------------------------------------------
@@ -107,14 +165,26 @@ public class Battle_MainPanel extends SurfaceView implements Callback,Runnable{
 
 	@Override
 	public void surfaceCreated(SurfaceHolder holder) {
-		//モンスター画像の設置
+		//モンスター画像の設置--------------------------------------------------------------------------
 		Canvas canvas = holder.lockCanvas();
 		this.setStage(canvas);
     	player.allDraw(canvas);
     	enemy.allDraw(canvas);
     	holder.unlockCanvasAndPost(canvas);
-    	//戦闘開始
-		gameloop = new Thread(this);
+    	//戦闘開始-----------------------------------------------------------------------------------
+    	String text1;
+    	if(enemy.getMonster(3) !=null){
+    			   text1 = enemy.getMonster(1).getName() + "があらわれた。\n"+
+    					   enemy.getMonster(2).getName() + "があらわれた。\n"+
+    				       enemy.getMonster(3).getName() + "があらわれた。\n";
+    	}else if(enemy.getMonster(2) != null){
+    			   text1 = enemy.getMonster(1).getName() + "があらわれた。\n"+
+       					   enemy.getMonster(2).getName() + "があらわれた。\n";
+    	}else{
+    			   text1 = enemy.getMonster(1).getName() + "があらわれた。\n";
+    	}
+    	this.setText(text1);
+    	gameloop = new Thread(this);
 		gameloop.start();
 		//activityの変更処理
 	}
@@ -154,9 +224,21 @@ public class Battle_MainPanel extends SurfaceView implements Callback,Runnable{
 			//enemy.getMonster(3).attack(phase);
 			
 			//どちらかのHPが０になれば終了。あるいはモンスターが全滅したらtrueにして発生させる。
-			//if(自分のHP==0)		GameOver画面へ遷移
-			//else if(敵のHP==0) 非戦闘画面へ遷移（経験値、入手アイテム等の追加、テキスト表示などの処理）
+			//if(自分のHP==0)		GameOver画面へ遷移-----------------------------------------------------------------
+			
+			//else if(敵のHP==0) 非戦闘画面へ遷移（経験値、入手アイテム等の追加、テキスト表示などの処理）--------------------------------
 			if(enemy.getMonster(1).getHP() <0){
+				//敵モンスター以外を再描画
+				Canvas canvas = holder.lockCanvas();
+				this.setStage(canvas);
+		    	player.allDraw(canvas);
+		    	if(enemy.getMonster(2)!=null){
+		    		enemy.getMonster(2).draw(canvas, 2*dispWidth/7, 2*dispHeight/5);
+		    	}
+		    	if(enemy.getMonster(3)!=null){
+		    		enemy.getMonster(3).draw(canvas, 1*dispWidth/7, 2*dispHeight/5);
+		    	}
+		    	holder.unlockCanvasAndPost(canvas);
 				//仮の処理
 				loop = false;
 				String text = enemy.getMonster(1).getName() + "を倒した";
@@ -169,8 +251,8 @@ public class Battle_MainPanel extends SurfaceView implements Callback,Runnable{
 	
 	//【ボタンが押されたときのメソッド】=============================================================================
 	public void attackButton(int num1,int num2){
-		this.num1 = num1;
-		this.num2 = num2;
+		this.num1 = num1; //自分のモンスター
+		this.num2 = num2; //敵のモンスター	
 		AtkPressed = true;
 	}
 	public void EscapeButton(){
