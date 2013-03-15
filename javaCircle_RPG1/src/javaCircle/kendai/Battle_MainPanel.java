@@ -34,7 +34,7 @@ public class Battle_MainPanel extends SurfaceView implements Callback,Runnable{
 	private Point point;
 	private int dispHeight,dispWidth;
 	
-	//【コンストラクタ】=================================================================================================
+	//【コンストラクタ】==================================================================================================
 	public Battle_MainPanel(Context context,SurfaceView sv,TextView textview,Handler a,Point point) {
 		super(context);
 		this.context = context;
