@@ -14,6 +14,7 @@ import android.os.Message;
 import android.view.SurfaceHolder;
 import android.view.SurfaceHolder.Callback;
 import android.view.SurfaceView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 
@@ -35,7 +36,7 @@ public class Battle_MainPanel extends SurfaceView implements Callback,Runnable{
 	private int dispHeight,dispWidth;
 	
 	//【コンストラクタ】=================================================================================================
-	public Battle_MainPanel(Context context,SurfaceView sv,TextView textview,Handler a,Point point) {
+	public Battle_MainPanel(Context context,SurfaceView sv,TextView textview,Handler a,Point point,ProgressBar bar1,ProgressBar bar2) {
 		super(context);
 		this.context = context;
 		this.textview = textview;
@@ -48,11 +49,11 @@ public class Battle_MainPanel extends SurfaceView implements Callback,Runnable{
 		holder = sv.getHolder();
 		holder.addCallback(this);
 		//自分のモンスターのセット
-		Kamakiri kama1 = new Kamakiri(context);
+		Kamakiri kama1 = new Kamakiri(context,bar2);
 		player = new Party(kama1,null,null,point);
 		//敵モンスターのセット
 		/*できればランダムにするアルゴリズムを作る*/
-		Dragon dra1 = new Dragon(context);
+		Dragon dra1 = new Dragon(context,bar1);
 		enemy = new Enemy(dra1,null,null,point);
 			
 	}//=========================================================================================================

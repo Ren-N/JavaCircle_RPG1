@@ -14,6 +14,7 @@ import android.view.SurfaceView;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 public class RPG_main extends Activity {
@@ -22,6 +23,8 @@ public class RPG_main extends Activity {
 	private TextView text;
 	private Button button1;
 	private Button button2;
+	private ProgressBar bar1;
+	private ProgressBar bar2;
 	private int num1 =1;
 	private int num2 =1;
 	@Override
@@ -41,6 +44,13 @@ public class RPG_main extends Activity {
                 text.setText((String) message.obj);
             };
         };
+        //progressBarの追加-----------------------------------------------------------------------------
+        bar1 = (ProgressBar)findViewById(R.id.progressBar1);
+        bar2 = (ProgressBar)findViewById(R.id.progressBar2);
+        bar1.setMax(100);
+        bar2.setMax(100);
+        bar1.setProgress(100); /*最初に満タン表示にするため。各モンスターに渡してから再設定。*/
+        bar2.setProgress(100);
       //ディスプレイのサイズの取得-----------------------------------------------------------------------------
       		WindowManager wm = (WindowManager)getSystemService(Context.WINDOW_SERVICE);
       		Display disp = wm.getDefaultDisplay();
@@ -50,7 +60,7 @@ public class RPG_main extends Activity {
         //メインパネル----------------------------------------------------------------------------------------
 		/*xmlで生成したsurfaceviewの参照*/
 		sur = (SurfaceView)findViewById(R.id.Battle_MainPanel);
-		mainpanel = new Battle_MainPanel(this, sur,text,mHandler,point);
+		mainpanel = new Battle_MainPanel(this, sur,text,mHandler,point,bar1,bar2);
 		//ボタン---------------------------------------------------------------------------------------------
 		button1 = (Button)findViewById(R.id.button1);
 		button2 = (Button)findViewById(R.id.button2);
