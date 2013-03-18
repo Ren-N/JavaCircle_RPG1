@@ -220,8 +220,14 @@ public class Battle_MainPanel extends SurfaceView implements Callback,Runnable{
 				phase++;
 			}
 			/*敵の行動。引数にphase。phaseによって攻撃頻度をモンスターごとに変える。あるいはランダム。attack()は各モンスターごとにOverrideする*/
-			phase+=enemy.getMonster(1).attack(player.getMonster(1),phase);//攻撃時は+1、そうでないときは+0して繰り返し実行されるのを防ぐ
-			
+			if(enemy.getMonster(1).phaseCheack(phase)==true){
+				String text;
+				text = enemy.getMonster(1).attack(player.getMonster(1));
+				if(text!=null){
+					setText(text);
+				}
+				phase++;
+			}
 			//enemy.getMonster(2).attack(phase);
 			//enemy.getMonster(3).attack(phase);
 			

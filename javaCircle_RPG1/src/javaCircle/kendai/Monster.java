@@ -14,14 +14,16 @@ public class Monster {
 	protected String name;
 	protected Bitmap image;
 	protected ProgressBar bar;
+	protected boolean a;
 	//コンストラクタ
 	public Monster(ProgressBar bar){
 		this.bar = bar;
 	}
 	
 	//攻撃!!
-	public void attack(Monster target){
+	public String attack(Monster target){
 		target.dameged(this.power);
+		return null;//攻撃時の表示テキストを返す。
 	}
 	//ダメージ!!
 	public void dameged(int power){
@@ -39,10 +41,9 @@ public class Monster {
     	Paint paint = new Paint();
     	canvas.drawBitmap(image,x,y,paint);
     }
-	//敵用攻撃メソッド
-	public int attack(Monster target, int phase) {
-		// TODO 自動生成されたメソッド・スタブ
-		//攻撃後は１、そうでないときは０を返す。呼び出し元でphaseに+=してループで繰り返し攻撃が実行されるのを防ぐ。
-		return 0;
+	//敵用メソッド=======================================================================================
+
+	public boolean phaseCheack(int phase){
+		return false;
 	}
 }
