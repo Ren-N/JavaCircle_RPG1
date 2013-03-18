@@ -31,10 +31,10 @@ public class Dragon extends Monster{
 				//HPが少なくなると攻撃力があがる。そのうち、1/10の確立で中ダメージ。1/50の確立で大ダメージ
 				int ran1=(int)(Math.random()*10); 
 				int ran2=(int)(Math.random()*100);
-				if(ran1 == 0){
+				if(ran1 == 5){
 					target.dameged((int) (this.power*1.5));
 					return getName() + "の中攻撃!!";
-				}else if(ran2 >49){
+				}else if(ran2 == 5){
 					target.dameged((int) (this.power*5));
 					return getName() + "の特大攻撃!!";
 				}else{

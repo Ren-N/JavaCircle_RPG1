@@ -84,61 +84,80 @@ public class Battle_MainPanel extends SurfaceView implements Callback,Runnable{
 		
 		String text = attacker.getName() + "は" +target.getName() + "を攻撃。";
 		this.setText(text);
+		this.tenmetu(target);
 		
+		
+	}
+	//ダメージ時の点滅
+	public void tenmetu(Monster target){
 		//敵モンスターの点滅(今回はnum2=1のとき。これもifで場合わけ。今回は割愛。)
-		for(int i=0;i<2;i++){
-			Canvas canvas = holder.lockCanvas();
-			this.setStage(canvas);
-			if(player.getMonster(1)!=null){
-    		player.getMonster(1).draw(canvas, 0, 4*dispHeight/5);
-			}
-			if(player.getMonster(2)!=null){
-				player.getMonster(2).draw(canvas, 1*dispWidth/3, 4*dispHeight/5);
-			}
-	    	if(player.getMonster(3)!=null){
-	    		player.getMonster(3).draw(canvas, 2*dispWidth/3, 4*dispHeight/5);
-	    	}
-	    	/*if(enemy.getMonster(2)!=null){
-	    		enemy.getMonster(2).draw(canvas, 2*dispWidth/7, 2*dispHeight/5);
-	    	}
-	    	if(enemy.getMonster(3)!=null){
-	    		enemy.getMonster(3).draw(canvas, 1*dispWidth/7, 2*dispHeight/5);
-	    	}*/
-	    	holder.unlockCanvasAndPost(canvas);
-	    	try{
-				Thread.sleep(20);
-			} catch(InterruptedException e){
-				e.printStackTrace();
-			}
-	    	canvas = holder.lockCanvas();
-			this.setStage(canvas);
-	    	if(player.getMonster(1)!=null){
-	    		player.getMonster(1).draw(canvas, 0, 4*dispHeight/5);
-	    	}
-	    	if(player.getMonster(2)!=null){
-	    		player.getMonster(2).draw(canvas, 1*dispWidth/3, 4*dispHeight/5);
-	    	}
-	    	if(player.getMonster(3)!=null){
-	    		player.getMonster(3).draw(canvas, 2*dispWidth/3, 4*dispHeight/5);
-	    	}
-	    	if(enemy.getMonster(1)!=null){
-	    		enemy.getMonster(1).draw(canvas, 2*dispWidth/7, 2*dispHeight/5);
-	    	}
-	    	if(enemy.getMonster(2)!=null){
-	    		enemy.getMonster(2).draw(canvas, 2*dispWidth/7, 2*dispHeight/5);
-	    	}
-	    	if(enemy.getMonster(3)!=null){
-	    		enemy.getMonster(3).draw(canvas, 1*dispWidth/7, 2*dispHeight/5);
-	    	}
-	    	holder.unlockCanvasAndPost(canvas);
-	    	try{
-				Thread.sleep(20);
-			} catch(InterruptedException e){
-				e.printStackTrace();
-			}
+				for(int i=0;i<2;i++){
+					Canvas canvas = holder.lockCanvas();
+					this.setStage(canvas);
+					if(player.getMonster(1)!=null){
+						if(target != player.getMonster(1)){
+							player.getMonster(1).draw(canvas, 0, 4*dispHeight/5);
+						}
+					}
+					if(player.getMonster(2)!=null){
+						if(target !=player.getMonster(2)){
+							player.getMonster(2).draw(canvas, 1*dispWidth/3, 4*dispHeight/5);
+						}
+					}
+			    	if(player.getMonster(3)!=null){
+			    		if(target != player.getMonster(3)){
+			    			player.getMonster(3).draw(canvas, 2*dispWidth/3, 4*dispHeight/5);
+			    		}
+			    	}
+			    	if(enemy.getMonster(1)!=null){
+			    		if(target != enemy.getMonster(1)){
+			    			enemy.getMonster(1).draw(canvas, 2*dispWidth/7, 2*dispHeight/5);
+			    		}
+			    	}
+			    	if(enemy.getMonster(2)!=null){
+			    		if(target != enemy.getMonster(2)){
+			    			enemy.getMonster(2).draw(canvas, 2*dispWidth/7, 2*dispHeight/5);
+			    		}
+			    	}
+			    	if(enemy.getMonster(3)!=null){
+			    		if(target != enemy.getMonster(3)){
+			    			enemy.getMonster(3).draw(canvas, 1*dispWidth/7, 2*dispHeight/5);
+			    		}
+			    	}
+			    	holder.unlockCanvasAndPost(canvas);
+			    	try{
+						Thread.sleep(20);
+					} catch(InterruptedException e){
+						e.printStackTrace();
+					}
+			    	canvas = holder.lockCanvas();
+					this.setStage(canvas);
+			    	if(player.getMonster(1)!=null){
+			    		player.getMonster(1).draw(canvas, 0, 4*dispHeight/5);
+			    	}
+			    	if(player.getMonster(2)!=null){
+			    		player.getMonster(2).draw(canvas, 1*dispWidth/3, 4*dispHeight/5);
+			    	}
+			    	if(player.getMonster(3)!=null){
+			    		player.getMonster(3).draw(canvas, 2*dispWidth/3, 4*dispHeight/5);
+			    	}
+			    	if(enemy.getMonster(1)!=null){
+			    		enemy.getMonster(1).draw(canvas, 2*dispWidth/7, 2*dispHeight/5);
+			    	}
+			    	if(enemy.getMonster(2)!=null){
+			    		enemy.getMonster(2).draw(canvas, 2*dispWidth/7, 2*dispHeight/5);
+			    	}
+			    	if(enemy.getMonster(3)!=null){
+			    		enemy.getMonster(3).draw(canvas, 1*dispWidth/7, 2*dispHeight/5);
+			    	}
+			    	holder.unlockCanvasAndPost(canvas);
+			    	try{
+						Thread.sleep(20);
+					} catch(InterruptedException e){
+						e.printStackTrace();
+					}
 
-		}
-		
+				}
 	}
 	
 	//逃げる!!-----------------------------------------------------------------------------------------------------
@@ -225,15 +244,28 @@ public class Battle_MainPanel extends SurfaceView implements Callback,Runnable{
 				text = enemy.getMonster(1).attack(player.getMonster(1));
 				if(text!=null){
 					setText(text);
+					tenmetu(player.getMonster(1));
 				}
 				phase++;
+				try{
+        			Thread.sleep(1500);
+        		} catch(InterruptedException e){
+        			e.printStackTrace();
+        		}
 			}
 			//enemy.getMonster(2).attack(phase);
 			//enemy.getMonster(3).attack(phase);
 			
 			//どちらかのHPが０になれば終了。あるいはモンスターが全滅したらtrueにして発生させる。
 			//if(自分のHP==0)		GameOver画面へ遷移-----------------------------------------------------------------
-			if(player.getMonster(1).getHP() <0){	//暫定処理
+			if(player.getMonster(1).getHP() <0){	
+				//暫定処理
+				//自分モンスター以外を再描画
+				Canvas canvas = holder.lockCanvas();
+				this.setStage(canvas);
+		    	enemy.allDraw(canvas);
+		    	holder.unlockCanvasAndPost(canvas);
+		    	
 				loop = false;
 				String text = player.getMonster(1).getName() + "は天に召された。";
 				this.setText(text);
