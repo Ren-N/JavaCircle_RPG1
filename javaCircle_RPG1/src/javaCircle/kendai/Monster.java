@@ -13,10 +13,10 @@ public class Monster {
 	protected int defence;
 	protected String name;
 	protected Bitmap image;
-	protected ProgressBar bar1;
+	protected ProgressBar bar;
 	//コンストラクタ
-	public Monster(ProgressBar bar1){
-		this.bar1 = bar1;
+	public Monster(ProgressBar bar){
+		this.bar = bar;
 	}
 	
 	//攻撃!!
@@ -26,7 +26,7 @@ public class Monster {
 	//ダメージ!!
 	public void dameged(int power){
 		this.hp -= power - this.defence;
-		this.bar1.setProgress(this.hp);
+		this.bar.setProgress(this.hp);
 	}
 	public String getName(){
 		return this.name;

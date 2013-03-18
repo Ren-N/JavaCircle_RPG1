@@ -8,10 +8,10 @@ import android.widget.ProgressBar;
 
 public class Dragon extends Monster{
 
-	public Dragon(Context context,ProgressBar bar1){
-		super(bar1);
+	public Dragon(Context context,ProgressBar bar){
+		super(bar);
 		this.hp = 2000;
-		this.bar1.setMax(this.hp);
+		this.bar.setMax(this.hp);
 		this.power = 350;
 		this.defence = 500;
 		this.name = "火竜";
