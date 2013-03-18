@@ -25,7 +25,7 @@ public class Monster {
 	}
 	//ダメージ!!
 	public void dameged(int power){
-		this.hp -= power - this.defence;
+		this.hp -= (power - this.defence);
 		this.bar.setProgress(this.hp);
 	}
 	public String getName(){
@@ -39,4 +39,10 @@ public class Monster {
     	Paint paint = new Paint();
     	canvas.drawBitmap(image,x,y,paint);
     }
+	//敵用攻撃メソッド
+	public int attack(Monster target, int phase) {
+		// TODO 自動生成されたメソッド・スタブ
+		//攻撃後は１、そうでないときは０を返す。呼び出し元でphaseに+=してループで繰り返し攻撃が実行されるのを防ぐ。
+		return 0;
+	}
 }

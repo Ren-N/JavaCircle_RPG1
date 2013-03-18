@@ -211,7 +211,7 @@ public class Battle_MainPanel extends SurfaceView implements Callback,Runnable{
 				EscPressed = false;
 				this.Escape();
 				//文字が表示されて少し待機してから画面遷移。
-				/*loopをfalseにせずEscap()で画面遷移してもいいが、thread.sleep等のthreadの関数を他の場所に書くと見にくいため。*/
+				/*loopをfalseにせずEscape()で画面遷移してもいいが、thread.sleep等のthreadの関数を他の場所に書くと見にくいため。*/
 				try{
         			Thread.sleep(100);
         		} catch(InterruptedException e){
@@ -219,13 +219,20 @@ public class Battle_MainPanel extends SurfaceView implements Callback,Runnable{
         		}
 				phase++;
 			}
-			//敵の行動。引数にphase。phaseによって攻撃頻度をモンスターごとに変える。あるいはランダム。attack()は各モンスターごとにOverrideする
-			//enemy.getMonster(1).attack(phase);
+			/*敵の行動。引数にphase。phaseによって攻撃頻度をモンスターごとに変える。あるいはランダム。attack()は各モンスターごとにOverrideする*/
+			phase+=enemy.getMonster(1).attack(player.getMonster(1),phase);//攻撃時は+1、そうでないときは+0して繰り返し実行されるのを防ぐ
+			
 			//enemy.getMonster(2).attack(phase);
 			//enemy.getMonster(3).attack(phase);
 			
 			//どちらかのHPが０になれば終了。あるいはモンスターが全滅したらtrueにして発生させる。
 			//if(自分のHP==0)		GameOver画面へ遷移-----------------------------------------------------------------
+			if(player.getMonster(1).getHP() <0){	//暫定処理
+				loop = false;
+				String text = player.getMonster(1).getName() + "は天に召された。";
+				this.setText(text);
+			}
+			
 			
 			//else if(敵のHP==0) 非戦闘画面へ遷移（経験値、入手アイテム等の追加、テキスト表示などの処理）--------------------------------
 			if(enemy.getMonster(1).getHP() <0){
